@@ -1,0 +1,31 @@
+name: ESPHome Validate and Compile
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-compile:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      matrix:
+        file:
+          - slimmelezer_alap.yaml
+          - slimmelezer_eth_napelemes_2023.yaml
+          - slimmelezer_eth_napelemes_2024.yaml
+          - slimmelezer_napelemes_2023.yaml
+          - slimmelezer_napelemes_2024.yaml
+        esphome-version:
+          - stable
+          - dev          
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4.1.7
+      - name: ESPHome ${{ matrix.esphome-version }}
+        uses: esphome/build-action@v4.0.4
+        with:
+          yaml-file: ${{ matrix.file }}.yaml
+          version: ${{ matrix.esphome-version }}
