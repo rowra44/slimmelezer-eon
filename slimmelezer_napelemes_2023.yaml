@@ -1,7 +1,7 @@
 ---
 substitutions:
-  device_name: "slimmelezer"
-  device_friendly_name: "SlimmeLezer"
+  device_name: "slimmelezer-2023"
+  device_friendly_name: "SlimmeLezer 2023"
   device_description: "Okosmérő P1 port kiolvasó"
 esphome:
   name: ${device_name}

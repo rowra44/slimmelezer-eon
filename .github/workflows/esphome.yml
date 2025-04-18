@@ -10,16 +10,16 @@ jobs:
   validate-and-compile:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 3
+      max-parallel: 4
       matrix:
         file:
-          - slimmelezer_eth_napelemes_2023.yaml
+          # - slimmelezer_eth_napelemes_2023.yaml
           - slimmelezer_eth_napelemes_2024.yaml
-          - slimmelezer_napelemes_2023.yaml
+          # - slimmelezer_napelemes_2023.yaml
           - slimmelezer_napelemes_2024.yaml
         esphome-version:
           - stable
-          - dev          
+          # - dev
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4.1.7
@@ -35,3 +35,37 @@ jobs:
         with:
           yaml-file: ${{ matrix.file }}
           version: ${{ matrix.esphome-version }}
+          complete-manifest: true
+
+      - name: List build directories for debugging
+        run: |
+          echo "Listing .esphome/build:"
+          ls -lR .esphome/build || true
+          echo "Listing .pioenvs:"
+          ls -lR .pioenvs || true
+
+      - name: Collect all firmware from ESPHome output folders
+        run: |
+          VERSION=${{ matrix.esphome-version }}
+          mkdir -p output
+          for d in slimmelezer-*; do
+            if [ -d "$d" ]; then
+              SUBDIR=$(basename "$d")
+              for f in "$d"/*.bin "$d"/*.elf; do
+                if [ -f "$f" ]; then
+                  EXT="${f##*.}"
+                  cp "$f" "output/${SUBDIR}-firmware-${VERSION}.$EXT"
+                fi
+              done
+              # Copy manifest.json if exists
+              if [ -f "$d/manifest.json" ]; then
+                cp "$d/manifest.json" "output/${SUBDIR}-firmware-${VERSION}.manifest.json"
+              fi
+            fi
+          done
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.file }}-${{ matrix.esphome-version }}
+          path: output
