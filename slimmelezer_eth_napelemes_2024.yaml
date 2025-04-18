@@ -211,9 +211,9 @@ sensor:
   - platform: uptime
     name: "SlimmeLezer üzemidő"
     device_class: duration
-  - platform: wifi_signal
-    name: "SlimmeLezer Wi-Fi jel"
-    update_interval: 60s
+  # - platform: wifi_signal
+  #   name: "SlimmeLezer Wi-Fi jel"
+  #   update_interval: 60s
 
   - platform: template
     name: "Pillanatnyi teljesítmény - hatásos eredő"
@@ -224,16 +224,16 @@ sensor:
     accuracy_decimals: 3
 
 text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: "SlimmeLezer IP"
-      update_interval: 60s
-    ssid:
-      name: "SlimmeLezer Wi-Fi SSID"
-      update_interval: 60s
-    bssid:
-      name: "SlimmeLezer Wi-Fi BSSID"
-      update_interval: 60s
+  # - platform: wifi_info
+  #   ip_address:
+  #     name: "SlimmeLezer IP"
+  #     update_interval: 60s
+  #   ssid:
+  #     name: "SlimmeLezer Wi-Fi SSID"
+  #     update_interval: 60s
+  #   bssid:
+  #     name: "SlimmeLezer Wi-Fi BSSID"
+  #     update_interval: 60s
 
   - platform: dsmr
     #identification:
