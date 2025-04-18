@@ -1,5 +1,8 @@
 # SlimmeLezer telepítés – ESPHome
 
+[![ESPHome Compile](https://github.com/amargo/slimmelezer-eon/actions/workflows/esphome.yml/badge.svg)](https://github.com/amargo/slimmelezer-eon/actions/workflows/esphome.yml)
+
+
 ### Készült Slimmelezer.E.ON - [4D4M](https://prohardver.hu/tag/4d4m.html)
 
 1. ESPHome platform szerinti telepítés esetén a [mindig aktuális útmutató](https://esphome.io/guides/getting_started_hassio) alapján létre kell hozni a slimmelezer konfiguráció fogadására alkalmas "üres" eszközt.
