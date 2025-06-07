@@ -2,9 +2,10 @@ name: ESPHome Compile
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, feature/* ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   compile:
