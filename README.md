@@ -2,6 +2,11 @@
 
 [![ESPHome Compile](https://github.com/amargo/slimmelezer-eon/actions/workflows/esphome.yml/badge.svg)](https://github.com/amargo/slimmelezer-eon/actions/workflows/esphome.yml)
 
+## Frissítések
+
+### ESPHome 2025.5.x kompatibilitási frissítés
+A komponens frissítve lett, hogy kompatibilis legyen az ESPHome 2025.5.x és újabb verzióival. A frissítés megoldja a `text_sensor.TEXT_SENSOR_SCHEMA` elavult séma használatával kapcsolatos figyelmeztetést, amely a 2025.11.0 verzióban teljesen el lesz távolítva. A komponens most már a `text_sensor.text_sensor_schema()` függvényt használja, miközben megőrzi a visszafelé kompatibilitást a korábbi ESPHome verziókkal is.
+
 
 ### Készült Slimmelezer.E.ON - [4D4M](https://prohardver.hu/tag/4d4m.html)
 

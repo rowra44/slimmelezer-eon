@@ -14,7 +14,7 @@ esp32:
   board: esp32dev
 
 external_components:
-  - source: github://4D4M-Github/slimmelezer-eon[@main]
+  - source: github://amargo/slimmelezer-eon[@main]
     components: [dsmr]
     refresh: 0s
 

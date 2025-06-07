@@ -6,82 +6,89 @@ from esphome.const import (
 )
 from . import Dsmr, CONF_DSMR_ID
 
+# For backward compatibility with ESPHome versions before 2025.5.x
+# and forward compatibility with 2025.11.0+
+try:
+    text_sensor_schema = text_sensor.text_sensor_schema
+except AttributeError:
+    text_sensor_schema = lambda: text_sensor.TEXT_SENSOR_SCHEMA
+
 AUTO_LOAD = ["dsmr"]
 
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_DSMR_ID): cv.use_id(Dsmr),
-        cv.Optional("identification"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("identification"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("p1_version"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("p1_version"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("p1_version_be"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("p1_version_be"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("timestamp"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("timestamp"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("equipment_id"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("breaker_status"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("breaker_status"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("breaker_status_b"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("breaker_status_b"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("electricity_failure_log"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("electricity_failure_log"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("message_short"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("message_short"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("message_long"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("message_long"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("gas_equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("gas_equipment_id"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("thermal_equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("thermal_equipment_id"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("water_equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("water_equipment_id"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("sub_equipment_id"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("sub_equipment_id"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }
         ),
-        cv.Optional("gas_delivered_text"): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+        cv.Optional("gas_delivered_text"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
             }

@@ -14,9 +14,11 @@ esp8266:
   board: d1_mini
   restore_from_flash: true
 
+# Using local component to fix deprecated schema warning
 external_components:
-  - source: /config/esphome/components
+  - source: github://amargo/slimmelezer-eon[@main]
     components: [dsmr]
+    refresh: 0s
 
 wifi:
   ap:
