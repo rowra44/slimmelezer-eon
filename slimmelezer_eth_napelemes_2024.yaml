@@ -245,7 +245,7 @@ text_sensor:
     breaker_status:
       name: "Megszakító státusz"
     breaker_status_b:
-      name: "Megszakító státusz"
+      name: "Megszakító státusz B"
 
   - platform: version
     name: "ESPHome verzió és build"
