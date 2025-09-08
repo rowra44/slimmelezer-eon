@@ -55,6 +55,86 @@ dsmr:
   max_telegram_length: 3000
 ```
 
+## Új szenzorok (nettó értékek)
+
+Az alábbi YAML-okban elérhetőek az új, nettó értéket mutató szenzorok:
+
+- `slimmelezer_napelemes_2023.yaml`
+- `slimmelezer_napelemes_2024.yaml`
+- `slimmelezer_eth_napelemes_2023.yaml`
+- `slimmelezer_eth_napelemes_2024.yaml`
+
+### Nettó pillanatnyi teljesítmény fázisonként
+
+Három új szenzor jelenik meg, amelyek a fogyasztást pozitív, a betáplálást negatív előjellel mutatják:
+
+- `Pillanatnyi teljesítmény L1 - nettó` (`power_net_l1`)
+- `Pillanatnyi teljesítmény L2 - nettó` (`power_net_l2`)
+- `Pillanatnyi teljesítmény L3 - nettó` (`power_net_l3`)
+
+Ezek a szenzorok a `power_delivered_l*` és `power_returned_l*` szenzorok különbségeként kerülnek kiszámításra, ezért azoknak
+ID-t adtunk a YAML-okban. Egység: `kW`, pontosság: 3 tizedes.
+
+### Nettó meddő energia
+
+- `Meddő energia - nettó` (`reactive_energy_net`)
+
+Ez a szenzor a `Meddő energia - vételezett (+R)` és a `Meddő energia - betáplált (-R)` különbsége (`kvarh`).
+Pozitív érték: nettó meddő energia fogyasztás. Negatív érték: nettó meddő energia betáplálás.
+
+Megjegyzés: a `fields.h`-ban javítva lett a reaktív energia integer egysége (4.8.0 → `varh`), így a `kvarh/varh` párosítás
+következetes és helyes.
+
+## Per-fázis teljesítmény adatok – visszafelé kompatibilitás és E.ON kérés
+
+Az új YAML-ok a fázisonkénti nettó teljesítményt elsődlegesen a mérő által küldött per‑fázis hatásos teljesítményből számolják:
+
+- `power_delivered_l1..l3` és `power_returned_l1..l3` → nettó = vételezett − betáplált (kW)
+
+Ha a mérő nem küld ilyen per‑fázis teljesítmény adatot (sok mérőn alapból tiltva van), a számítások visszafelé kompatibilisen működnek:
+
+- Fallback képlet: P_net ≈ U × I × PF / 1000
+  - feszültség: `voltage_l1..l3`
+  - áram: `current_l1..l3`
+  - teljesítménytényező: `instantaneous_power_factor_l1..l3` (ha nem érhető el, PF=1.0 feltételezés)
+- A nettó áram (A) elsődlegesen P_net és U alapján kerül számításra (I = P_net×1000/U), ellenkező esetben a mérő által szolgáltatott `current_l*` kerül publikálásra.
+
+### Per‑fázis teljesítmény bekapcsoltatása az E.ON-nál
+
+Több mérőnél a per‑fázis hatásos teljesítmény értékek (`power_delivered_l*`, `power_returned_l*`) csak külön kérésre válnak elérhetővé. Ezek bekapcsoltatását az E.ON-nál lehet kérni e‑mailben. Ajánlott cím és sablon:
+
+- Címzett: aramhalozat@eon.hu
+
+Sablon:
+
+```
+Kedves Ügyfélszolgálat!
+Szeretnék kérni szoftverfrissítést a villanyórámhoz.
+
+E.ON felhasználó azonosító:
+MVM felhasználó azonosító:
+Mérő gyártási száma:
+Felhasználási hely:
+
+Köszönöm szépen!
+```
+
+Megjegyzés: a kérelemhez indoklás is szükséges (pl. napelemes rendszer fázisonkénti egyensúlyozása, terhelésmenedzsment, fázisonkénti visszatáplálás monitorozása stb.).
+
+## DSMR debug/telegram naplózás
+
+A nyers DSMR telegram naplózása bekerült VV szinten. Engedélyezés a YAML-ban:
+
+```yaml
+logger:
+  baud_rate: 0
+  level: INFO
+  logs:
+    dsmr: VERY_VERBOSE
+```
+
+Titkosított P1 esetén a visszafejtett telegram is megjelenik VV szinten. Ha túl zajos, állítsd `VERBOSE`-ra.
+
 #### megjegyzés: 
 Az itt elérhető csomag tartalmazza még slimmelezerre direktben(OTA, USB) feltölthető firmware-ek lefordított binárisait is, viszont ezek használata nem javasolt, mert frissítések alkalmával elveszhet a meglévő konfiguráció:
 [Slimmelezer.E.ON-4D4M.rar](https://drive.google.com/file/d/10OlD0Aoxti3LFLMXj2cScBJ9jfaaUWNJ/view)
