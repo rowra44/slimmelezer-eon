@@ -18,6 +18,11 @@ AUTO_LOAD = ["dsmr"]
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_DSMR_ID): cv.use_id(Dsmr),
+        cv.Optional("electricity_tariff"): text_sensor_schema().extend(
+            {
+                cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
+            }
+        ),
         cv.Optional("identification"): text_sensor_schema().extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
