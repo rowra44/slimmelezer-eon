@@ -317,7 +317,7 @@ namespace dsmr
     /* Tariff indicator electricity. 96.14.0
     * The tariff indicator can also be used to switch tariff dependent loads e.g boilers.
     * This is the responsibility of the P1 user */
-    DEFINE_FIELD(electricity_tariff, uint8_t, ObisId(0, 0, 96, 14, 0), IntField, units::none);
+    DEFINE_FIELD(electricity_tariff, String, ObisId(0, 0, 96, 14, 0), StringField, 0, 20);
 
     /* current status fo the breaker ON/OFF */
     DEFINE_FIELD(breaker_status, String, ObisId(0, 0, 96, 50, 68), StringField, 2, 3);
